@@ -23,7 +23,7 @@ Then, run this to install Python package.
 
 ```!bash
 # use `develop` if you are developing.
-python setup.py [install|develop}
+python setup.py [install|develop]
 ```
 
 # Maintain pypi-search-sample
