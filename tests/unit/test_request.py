@@ -9,7 +9,7 @@ import httpretty
 
 from pypi_search import search
 
-from .base import enable_httpretty, read_response_from_file
+from ..base import enable_httpretty, read_response_from_file
 
 # Scope static fixtures to `module` to avoid re-calling fixtures.
 @pytest.fixture
@@ -17,7 +17,7 @@ def success_case(scope="module"):
     name = "success"
     url = search.SEARCH_URL.format(name=name)
     status = 200
-    response = read_response_from_file("success.json")
+    response = read_response_from_file("unit", "success.json")
     response_serialized = json.dumps(response)
     return {
         "package_name": name,
