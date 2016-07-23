@@ -1,0 +1,2 @@
+# For uploading package to PyPI securely.
+twine==1.7.4
