@@ -22,4 +22,11 @@ def test_search_pypi_search_sample_returns_data(success_case):
 
     package_name = "pypi-search-sample"
     response = search.search_by_name(package_name)
+
+    # Reset "downloads" from comparison (see issue #18)
+    for tag, release in response["releases"].items():
+        release[0]["downloads"] = 0
+    for url in response["urls"]:
+        url["downloads"] = 0
+
     assert response == success_case
