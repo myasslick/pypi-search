@@ -44,16 +44,19 @@ def assert_success_case(success_case, test_response):
 def test_search_by_package_name_that_exists(success_case):
     """If a package exists, JSON should return."""
 
+    httpretty.enable()
     httpretty.register_uri(httpretty.GET, success_case["url"],
         body=success_case["response_s"],
         status=success_case["status"]
     )
 
     test_response = search.search_by_name(success_case["package_name"])
+    assert_success_case(success_case, test_response)
 
 def test_search_by_package_name_doesnt_exist(not_found_case):
     """If a package doesn't exist, `PackageNotFound` should be raised."""
 
+    httpretty.enable()
     httpretty.register_uri(httpretty.GET, not_found_case["url"],
         status=not_found_case["status"]
     )
