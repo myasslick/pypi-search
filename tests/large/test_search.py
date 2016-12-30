@@ -2,7 +2,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-from pypi_search import search
+from pypi_search import errors, search
 
 import pytest
 
@@ -30,3 +30,11 @@ def test_search_pypi_search_sample_returns_data(success_case):
         url["downloads"] = 0
 
     assert response == success_case
+
+def test_search_pypi_package_not_found():
+    """When package name is not found on PyPI, exception
+    `PackageNotFound` should be raised."""
+
+    package_name = "pypi-search-fake-package"
+    with pytest.raises(errors.PackageNotFound) as e:
+        search.search_by_name(package_name)

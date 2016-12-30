@@ -4,6 +4,8 @@
 
 import requests
 
+from . import errors
+
 SEARCH_URL = "http://pypi.python.org/pypi/{name}/json"
 SEARCH_HEADERS = {"Content-Type": "application/json"}
 
@@ -21,8 +23,17 @@ def search_by_name(package_name):
         If package is found on PyPI, the metadata of all
         available versions will be returned.
 
+
+    Raises
+    ------
+    `PackageNotFound`
+        When package being search is not found on PyPI.
+
     """
 
     url = SEARCH_URL.format(name=package_name)
     r = requests.get(url, headers=SEARCH_HEADERS)
-    return r.json()
+    if r.status_code == 404:
+        raise errors.PackageNotFound(package_name)
+    else:
+        return r.json()
